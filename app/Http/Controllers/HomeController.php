@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Chef;
 use App\Models\FoodMenu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -10,7 +11,8 @@ class HomeController extends Controller
 {
     public function index(){
         $datas = FoodMenu::all();
-        return view('home', compact('datas'));
+        $chefs = Chef::all();
+        return view('home', compact('datas','chefs'));
     }
 
     public function redirects(){

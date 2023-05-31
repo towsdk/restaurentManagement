@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\FoodMenu;
+use App\Models\Chef;
+use App\Models\Reservation;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -46,6 +48,22 @@ class AdminController extends Controller
 
         return redirect()->back();
     }
+    public function uploadchef(Request $request){
+        $data = new chef();
+
+        $image = $request->image;
+
+        $imagename = time().'.'.$image->getClientOriginalExtension();
+        $request->image->move('chefimage', $imagename);
+        $data->image = $imagename;
+
+        $data->name = $request->name;
+        $data->speciality = $request->speciality;
+
+        $data->save();
+
+        return redirect()->back();
+    }
 
     public function deleteMenu($id){
         $deleteMenu = FoodMenu::find($id);
@@ -70,5 +88,32 @@ class AdminController extends Controller
         $data->save();
 
         return redirect()->back();
+    }
+
+    public function reservation(Request $request)
+    {
+        $data = new Reservation();
+
+        $data->name = $request->name;
+        $data->email = $request->email;
+        $data->phone = $request->phone;
+        $data->guest = $request->guest;
+        $data->date = $request->date;
+        $data->time = $request->time;
+        $data->message = $request->message;
+
+        $data->save();
+
+        return redirect()->back();
+    }
+
+    public function customerreservation (){
+        $datas = Reservation::all();
+
+       return view('admin.customerreservation', compact('datas'));
+    }
+
+    public function chef(){
+        return view('admin.foodchef');
     }
 }

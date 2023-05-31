@@ -33,6 +33,14 @@ Route::get('/updateMenu/{id}', [AdminController::class, 'updateMenu']);
 
 Route::post('/update/{id}', [AdminController::class, 'update']);
 
+Route::post('/reservation', [AdminController::class, 'reservation']);
+
+Route::get('/customerreservation', [AdminController::class, 'customerreservation']);
+
+Route::get('/chef', [AdminController::class, 'chef']);
+
+Route::post('/uploadchef', [AdminController::class, 'uploadchef']);
+
 Route::get('/redirects', [HomeController::class, 'redirects']);
 
 
