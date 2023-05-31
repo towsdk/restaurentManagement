@@ -19,6 +19,11 @@ class AdminController extends Controller
         return redirect()->back();
     }
 
+   public function updateMenu($id){
+            $data = FoodMenu::find($id);
+            return view('admin.updateview', compact('data'));
+   }
+
     public function foodmenu(){
         $datas = FoodMenu::orderBy('id', 'DESC')->get();
         return view('admin.foodmenu', compact('datas'));
@@ -45,6 +50,25 @@ class AdminController extends Controller
     public function deleteMenu($id){
         $deleteMenu = FoodMenu::find($id);
         $deleteMenu->delete();
+        return redirect()->back();
+    }
+
+    public function update(Request $request, $id)
+    {
+        $data = FoodMenu::find($id);
+
+        $image = $request->image;
+
+        $imagename = time().'.'.$image->getClientOriginalExtension();
+        $request->image->move('foodimage', $imagename);
+        $data->image = $imagename;
+
+        $data->title = $request->title;
+        $data->price = $request->price;
+        $data->description = $request->description;
+
+        $data->save();
+
         return redirect()->back();
     }
 }
