@@ -13,7 +13,7 @@
     @include('admin.navbar')
     <!-- container-scroller -->
   
-   <div style="position: relative; top: 60px; right: -150px">
+   <div style="top: 60px; right: -150px">
     
 
 
@@ -21,12 +21,12 @@
           @csrf
 
           <div class="form-group">
-            <label>Name</label>
+            <label>Title</label>
             <input type="text" name="name" class="form-control text-white"  placeholder="Enter title" required>
           </div>
           <div class="form-group">
             <label>Price</label>
-            <input type="text" name="speciality" class="form-control text-white"  placeholder="Enter price" required>
+            <input type="number" name="speciality" class="form-control text-white"  placeholder="Enter price" required>
           </div>
           <div class="form-group">
             <label>Image</label>
@@ -35,6 +35,32 @@
          
           <button type="submit" class="btn btn-primary">Submit</button>
         </form>
+      
+        <table class="table mt-5 text-white table-bordered border-primary">
+          <thead>
+            <tr>
+              <th class="text-white">Name</th>
+              <th class="text-white">Price</th>
+              <th class="text-white">Image</th>
+              <th class="text-white">Description</th>
+              <th class="text-white">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+           @foreach ($datas as $data)
+           <tr>
+            <th >{{ $data->name }}</th>
+            <td>{{ $data->speciality }}</td>
+            <td>
+              <img height="200" width="400" src="/chefimage/{{ $data->image }}" alt="food_image">
+            </td>
+            <td><a href="{{ url('/chefdelete',$data->id) }}">Delete</a></td>
+            {{-- <td><a href="{{ url('/chefupdate',$data->id) }}">Update</a></td> --}}
+            <td><a href="{{ url('/chefupdate',$data->id) }}">Update</a></td>
+          </tr>
+           @endforeach
+          </tbody>
+        </table>
       
    </div>
     

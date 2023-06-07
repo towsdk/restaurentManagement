@@ -18,33 +18,44 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', [HomeController::class, 'index']);
-
-Route::get('/users', [AdminController::class, 'users']);
-
-Route::get('/deleteuser/{id}', [AdminController::class, 'deleteuser']);
-
-Route::get('/foodmenu', [AdminController::class, 'foodmenu']);
-
-Route::post('/uploadfood', [AdminController::class, 'uploadfood']);
-
-Route::get('/deleteMenu/{id}', [AdminController::class, 'deleteMenu']);
-
-Route::get('/updateMenu/{id}', [AdminController::class, 'updateMenu']);
-
-Route::post('/update/{id}', [AdminController::class, 'update']);
-
-Route::post('/reservation', [AdminController::class, 'reservation']);
-
-Route::get('/customerreservation', [AdminController::class, 'customerreservation']);
-
-Route::get('/chef', [AdminController::class, 'chef']);
-
-Route::post('/uploadchef', [AdminController::class, 'uploadchef']);
-
 Route::get('/redirects', [HomeController::class, 'redirects']);
 
 
+Route::get('/users', [AdminController::class, 'users']);
+Route::get('/deleteuser/{id}', [AdminController::class, 'deleteuser']);
 
+
+Route::controller(AdminController::class)->group(function(){
+    Route::get('/foodmenu','foodmenu');
+    Route::post('/uploadfood','uploadfood');
+    Route::get('/deleteMenu/{id}','deleteMenu');
+    Route::get('/updateMenu/{id}','updateMenu');
+    Route::post('/update/{id}','update');
+});
+
+
+Route::post('/reservation', [AdminController::class, 'reservation']);
+Route::get('/customerreservation', [AdminController::class, 'customerreservation']);
+
+
+Route::controller(AdminController::class)->group(function(){
+    Route::get('/chef','chef');
+    Route::post('/uploadchef','uploadchef');
+    Route::get('/chefupdate/{id}','chefupdate');
+    Route::get('/chefdelete/{id}','chefdelete');
+    Route::post('/updatechef/{id}','updatechef');
+});
+
+Route::controller(AdminController::class)->group(function(){
+    Route::get('/orders', 'orders');
+    Route::get('/search', 'search');
+});
+
+Route::post('addcart/{id}',[HomeController::class, 'addcart']);
+Route::get('showcart/{id}',[HomeController::class, 'showcart']);
+Route::get('remove/{id}',[HomeController::class, 'remove']);
+
+Route::post('/orderconfirm', [HomeController::class, 'orderconfirm']);
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
